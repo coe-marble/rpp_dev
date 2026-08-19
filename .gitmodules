@@ -1,0 +1,21 @@
+[submodule "src/rpp_py"]
+	path = src/rpp_py
+	url = git@github.com:coe-marble/rpp_py.git
+[submodule "src/rpp_plugin_registrator"]
+	path = src/rpp_plugin_registrator
+	url = git@github.com:coe-marble/rpp_plugin_registrator.git
+[submodule "src/rpp_orchestrator"]
+	path = src/rpp_orchestrator
+	url = git@github.com:coe-marble/rpp_orchestrator.git
+[submodule "src/rpp_cpp"]
+	path = src/rpp_cpp
+	url = git@github.com:coe-marble/rpp_cpp.git
+[submodule "src/rpp_common"]
+	path = src/rpp_common
+	url = git@github.com:coe-marble/rpp_common.git
+[submodule "src/rpp_cli"]
+	path = src/rpp_cli
+	url = git@github.com:coe-marble/rpp_cli.git
+[submodule "src/rpp_testing"]
+	path = src/rpp_testing
+	url = git@github.com:coe-marble/rpp_testing.git
