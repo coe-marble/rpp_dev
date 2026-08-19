@@ -1,8 +1,11 @@
 # rpp_dev
-Development metapackage for rpp
+Development metapackage for rpp.
+
 
 # Installation
 Run `setup.sh` script from the `rpp_dev` folder
+
+If you plan to use `cpp` components, make sure to build the rpp_cpp using the `colcon build` command
 
 # Getting started
 
