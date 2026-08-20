@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug registrator GUI",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/rpp_plugin_registrator/rpp_plugin_registrator/gui.py",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "subProcess": true
+        },
+    ]
+}

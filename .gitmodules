@@ -19,3 +19,6 @@
 [submodule "src/rpp_testing"]
 	path = src/rpp_testing
 	url = git@github.com:coe-marble/rpp_testing.git
+[submodule "rpp_docs"]
+	path = rpp_docs
+	url = https://github.com/coe-marble/rpp_docs.git

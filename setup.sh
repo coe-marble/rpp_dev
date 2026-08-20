@@ -31,3 +31,5 @@ git checkout main
 pip3 install -e .
 cd ..
 
+
+rpp init-home
