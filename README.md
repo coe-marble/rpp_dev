@@ -18,6 +18,25 @@ Usefull commands:
 
 `rpp ws` starts a Workspace GUI
 
+Further information on the rpp workflows can be found in the [documentation](rpp_docs/docs/workflows.md)
+
+
+## Using ROS2 with RPP
+
+If you plan to use ROS2 with RPP, after building, source
+the workspace before launching RPP:
+
+```bash
+cd ros_ws
+colcon build --symlink-install
+source install/setup.bash
+```
+
+For ROS 2 compilation, also enable the global RPP setting:
+
+```bash
+rpp registry config USE_ROS2_COMPILATION=True
+```
 
 # Packages
 
