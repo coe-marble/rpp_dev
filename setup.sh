@@ -1,3 +1,10 @@
+sudo apt-get install -y \
+    capnproto=1.1.0-2.1 \
+    libcapnp-dev=1.1.0-2.1 \
+    python3-pyqt6 \
+    pybind11-dev \
+    nlohmann-json3-dev
+
 git submodule update --init --recursive
 cd src
 
@@ -30,6 +37,5 @@ cd rpp_testing
 git checkout main
 pip3 install -e .
 cd ..
-
 
 rpp init-home
