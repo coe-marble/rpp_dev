@@ -3,7 +3,8 @@ sudo apt-get install -y \
     libcapnp-dev=1.1.0-2.1 \
     python3-pyqt6 \
     pybind11-dev \
-    nlohmann-json3-dev
+    nlohmann-json3-dev \
+    gdb
 
 git submodule update --init --recursive
 cd src
@@ -37,5 +38,3 @@ cd rpp_testing
 git checkout main
 pip3 install -e .
 cd ..
-
-rpp init-home
