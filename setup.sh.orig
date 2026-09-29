@@ -12,10 +12,10 @@ case "$#:$1" in
         ;;
 esac
 
-venv_pip=$(command -v pip)
+venv_pip=/opt/rpp-venv/bin/pip
 
 if [ ! -x "$venv_pip" ]; then
-    echo "Virtual environment pip not found in PATH..." >&2
+    echo "Virtual environment not found at /opt/rpp-venv; rebuild the dev container." >&2
     exit 1
 fi
 
@@ -27,8 +27,6 @@ if [ "$install_only" = false ]; then
         pybind11-dev \
         nlohmann-json3-dev \
         gdb
-
-    $venv_pip install xmltodict
 
     git submodule update --init --recursive
 fi
