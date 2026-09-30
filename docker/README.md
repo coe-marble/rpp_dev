@@ -22,9 +22,8 @@ Alternatively, build a local image:
 ./build.sh
 ```
 
-The local default image name is `rpp-dev:lyrical`. Set `IMAGE_TAG` before
-running the script to use a different name. In the commands below, replace the
-GHCR image name with your local tag when using a locally built image.
+The build script defaults to `ghcr.io/coe-marble/rpp-dev:lyrical`. Set
+`IMAGE_TAG` before running the script to use a different tag.
 
 ## 2. Export the configured workspace
 
