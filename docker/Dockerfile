@@ -60,24 +60,29 @@ RUN --mount=type=ssh \
     && git clone --recurse-submodules git@github.com:MOREnvironment/more_dynamics.git /workspaces/rpp/ros2_ws/src/rpp_libraries/more_dynamics \
     && git clone --recurse-submodules git@github.com:MOREnvironment/more_simulation.git /workspaces/rpp/ros2_ws/src/rpp_libraries/more_simulation \
     && git clone --recurse-submodules git@github.com:coe-marble/rpp_control.git /workspaces/rpp/ros2_ws/src/rpp_libraries/rpp_control \
-    && git clone --recurse-submodules git@github.com:coe-marble/rpp_localization.git /workspaces/rpp/ros2_ws/src/rpp_libraries/rpp_localization \
+    && git clone --recurse-submodules git@github.com:coe-marble/marble_control_msgs.git /workspaces/rpp/ros2_ws/src/marble_control_msgs \
+    # && git clone --recurse-submodules git@github.com:coe-marble/rpp_localization.git /workspaces/rpp/ros2_ws/src/rpp_libraries/rpp_localization \
     && chown -R "${USERNAME}:${USER_GID}" /workspaces
 
 USER ${USERNAME}
 
+
 RUN cd /workspaces/rpp/ros2_ws \
     && source /opt/ros/lyrical/setup.bash \
-    && colcon build --base-paths src/rpp_dev/src --packages-select rpp_cpp --symlink-install --cmake-args -DBUILD_TESTING=OFF \
-    && source /workspaces/rpp/ros2_ws/install/setup.bash \
-    && rpp init-home \
     && pip install --no-cache-dir -e /workspaces/rpp/ros2_ws/src/rpp_libraries/more_common \
     && pip install --no-cache-dir -e /workspaces/rpp/ros2_ws/src/rpp_libraries/more_sensors \
     && pip install --no-cache-dir -e /workspaces/rpp/ros2_ws/src/rpp_libraries/more_dynamics \
     && pip install --no-cache-dir -e /workspaces/rpp/ros2_ws/src/rpp_libraries/more_simulation \
+    && colcon build --base-paths src/rpp_dev/src --packages-up-to rpp_cpp --symlink-install --cmake-args -DBUILD_TESTING=OFF \
+    && colcon build --packages-select marble_control_msgs --symlink-install --cmake-args -DBUILD_TESTING=OFF \
+    && source /workspaces/rpp/ros2_ws/install/setup.bash \
+    && rpp init-home \
     && rpp library register /workspaces/rpp/ros2_ws/src/rpp_libraries/more_sensors --link \
     && rpp library register /workspaces/rpp/ros2_ws/src/rpp_libraries/more_dynamics --link \
     && rpp library register /workspaces/rpp/ros2_ws/src/rpp_libraries/more_simulation --link \
-    && rpp library register /workspaces/rpp/ros2_ws/src/rpp_libraries/rpp_control --link
+    && rpp library register /workspaces/rpp/ros2_ws/src/rpp_libraries/rpp_control --link \
+    && colcon build --symlink-install --cmake-args -DBUILD_TESTING=OFF \
+    && source /workspaces/rpp/ros2_ws/install/setup.bash
 
 RUN printf '%s\n' \
         'source /opt/ros/lyrical/setup.bash' \
