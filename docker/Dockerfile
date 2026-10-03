@@ -49,6 +49,10 @@ RUN python3 -m venv --system-site-packages /opt/rpp-venv \
 
 ENV PATH="/opt/rpp-venv/bin:${PATH}"
 
+ENV PYTHONPATH="/opt/rpp-venv/lib/python3.14/site-packages:\
+/workspaces/rpp/ros2_ws/src/rpp_dev/src/rpp_py:\
+/workspaces/rpp/ros2_ws/src/rpp_libraries/more_common:${PYTHONPATH}"
+
 RUN --mount=type=ssh \
     install -d -m 0700 /root/.ssh \
     && ssh-keyscan github.com > /root/.ssh/known_hosts \
