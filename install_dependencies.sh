@@ -13,10 +13,7 @@ if ! "$venv_python" -c 'import sys; raise SystemExit(sys.prefix == sys.base_pref
     exit 1
 fi
 
-if ! "$venv_python" -m pip install --help | grep -q -- "--only-deps"; then
-    echo "pip 26.2 or newer is required for dependency-only installation." >&2
-    exit 1
-fi
+"$venv_python" -m pip install --upgrade "pip>=26.2"
 
 repository_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
