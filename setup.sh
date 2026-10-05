@@ -46,7 +46,10 @@ checkout_main() {
     fi
 }
 
-"$(dirname "${BASH_SOURCE[0]}")/install_dependencies.sh"
+if ! bash "$(dirname "${BASH_SOURCE[0]}")/install_dependencies.sh"; then
+    echo "RPP dependency installation failed." >&2
+    exit 1
+fi
 
 cd src
 
