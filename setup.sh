@@ -12,12 +12,21 @@ case "$#:$1" in
         ;;
 esac
 
-venv_pip=$(command -v pip)
+venv_python=$(command -v python3)
 
-if [ ! -x "$venv_pip" ]; then
-    echo "Virtual environment pip not found in PATH..." >&2
+if [ ! -x "$venv_python" ]; then
+    echo "Virtual environment Python not found in PATH..." >&2
     exit 1
 fi
+
+if ! "$venv_python" -c 'import sys; raise SystemExit(sys.prefix == sys.base_prefix)'; then
+    echo "Active Python is not a virtual environment..." >&2
+    exit 1
+fi
+
+venv_pip() {
+    "$venv_python" -m pip "$@"
+}
 
 if [ "$install_only" = false ]; then
     sudo apt-get install -y \
@@ -28,8 +37,6 @@ if [ "$install_only" = false ]; then
         nlohmann-json3-dev \
         gdb
 
-    $venv_pip install xmltodict
-
     git submodule update --init --recursive
 fi
 
@@ -39,34 +46,36 @@ checkout_main() {
     fi
 }
 
+"$(dirname "${BASH_SOURCE[0]}")/install_dependencies.sh"
+
 cd src
 
 cd rpp_cli
 checkout_main
-"$venv_pip" install -e .
+venv_pip install --no-deps -e .
 cd ..
 
 cd rpp_common
 checkout_main
-"$venv_pip" install -e .
+venv_pip install --no-deps -e .
 cd ..
 
 cd rpp_orchestrator
 checkout_main
-"$venv_pip" install -e .
+venv_pip install --no-deps -e .
 cd ..
 
 cd rpp_plugin_registrator
 checkout_main
-"$venv_pip" install -e .
+venv_pip install --no-deps -e .
 cd ..
 
 cd rpp_py
 checkout_main
-"$venv_pip" install -e .
+venv_pip install --no-deps -e .
 cd ..
 
 cd rpp_testing
 checkout_main
-"$venv_pip" install -e .
+venv_pip install --no-deps -e .
 cd ..
