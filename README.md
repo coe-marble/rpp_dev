@@ -20,6 +20,23 @@ Usefull commands:
 
 Further information on the rpp workflows can be found in the [documentation](rpp_docs/docs/workflows.md)
 
+## Governance
+
+The shared [development policy](rpp_docs/docs/development-policy.md) is
+maintained in the documentation submodule. The RPP repository inventory,
+branch-ruleset payloads, and GitHub rollout script are maintained here:
+
+- `governance/rpp-repositories.txt`
+- `governance/rulesets/main.json`
+- `governance/rulesets/develop.json`
+- `tools/apply_github_policy.sh`
+
+Preview the rollout before making any GitHub change:
+
+```bash
+./tools/apply_github_policy.sh
+```
+
 
 ## Using ROS2 with RPP
 
@@ -49,5 +66,4 @@ rpp registry config USE_ROS2_COMPILATION=True
 ## Language Support
 - [rpp_cpp](https://github.com/coe-marble/rpp_cpp.git) - C++ support for rpp
 - [rpp_py](https://github.com/coe-marble/rpp_py.git) - Python support for rpp
-
 

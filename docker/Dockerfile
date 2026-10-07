@@ -5,7 +5,7 @@ ARG USERNAME=ubuntu
 ARG USER_UID=1000
 ARG USER_GID=${USER_UID}
 ARG RPP_DEV_REPOSITORY=git@github.com:coe-marble/rpp_dev.git
-ARG RPP_DEV_REF=main
+ARG RPP_DEV_REF=develop
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV ROS_DISTRO=lyrical
@@ -63,7 +63,7 @@ RUN --mount=type=ssh \
     && git clone --recurse-submodules git@github.com:MOREnvironment/more_sensors.git /workspaces/rpp/ros2_ws/src/rpp_libraries/more_sensors \
     && git clone --recurse-submodules git@github.com:MOREnvironment/more_dynamics.git /workspaces/rpp/ros2_ws/src/rpp_libraries/more_dynamics \
     && git clone --recurse-submodules git@github.com:MOREnvironment/more_simulation.git /workspaces/rpp/ros2_ws/src/rpp_libraries/more_simulation \
-    && git clone --recurse-submodules git@github.com:coe-marble/rpp_control.git /workspaces/rpp/ros2_ws/src/rpp_libraries/rpp_control \
+    && git clone --branch develop --recurse-submodules git@github.com:coe-marble/rpp_control.git /workspaces/rpp/ros2_ws/src/rpp_libraries/rpp_control \
     && git clone --recurse-submodules git@github.com:coe-marble/marble_control_msgs.git /workspaces/rpp/ros2_ws/src/marble_control_msgs \
     # && git clone --recurse-submodules git@github.com:coe-marble/rpp_localization.git /workspaces/rpp/ros2_ws/src/rpp_libraries/rpp_localization \
     && chown -R "${USERNAME}:${USER_GID}" /workspaces

@@ -37,12 +37,12 @@ if [ "$install_only" = false ]; then
         nlohmann-json3-dev \
         gdb
 
-    git submodule update --init --recursive
+    git submodule update --init --recursive --remote
 fi
 
-checkout_main() {
+checkout_develop() {
     if [ "$install_only" = false ]; then
-        git checkout main
+        git checkout develop
     fi
 }
 
@@ -54,31 +54,31 @@ fi
 cd src
 
 cd rpp_cli
-checkout_main
+checkout_develop
 venv_pip install --no-deps -e .
 cd ..
 
 cd rpp_common
-checkout_main
+checkout_develop
 venv_pip install --no-deps -e .
 cd ..
 
 cd rpp_orchestrator
-checkout_main
+checkout_develop
 venv_pip install --no-deps -e .
 cd ..
 
 cd rpp_plugin_registrator
-checkout_main
+checkout_develop
 venv_pip install --no-deps -e .
 cd ..
 
 cd rpp_py
-checkout_main
+checkout_develop
 venv_pip install --no-deps -e .
 cd ..
 
 cd rpp_testing
-checkout_main
+checkout_develop
 venv_pip install --no-deps -e .
 cd ..

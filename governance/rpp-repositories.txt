@@ -1,0 +1,12 @@
+# RPP repositories governed by the shared GitHub policy.
+rpp_control
+rpp_dev
+rpp_plugin_registrator
+rpp_testing
+rpp_py
+rpp_orchestrator
+rpp_common
+rpp_cli
+rpp_localization
+rpp_cpp
+rpp_docs
