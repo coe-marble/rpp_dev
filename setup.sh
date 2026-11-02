@@ -1,6 +1,8 @@
+set -euo pipefail
+
 install_only=false
 
-case "$#:$1" in
+case "$#:${1-}" in
     0:)
         ;;
     1:--install|1:--instal)
@@ -12,7 +14,7 @@ case "$#:$1" in
         ;;
 esac
 
-venv_python=$(command -v python3)
+venv_python=$(command -v python3 || true)
 
 if [ ! -x "$venv_python" ]; then
     echo "Virtual environment Python not found in PATH..." >&2
@@ -40,45 +42,33 @@ if [ "$install_only" = false ]; then
     git submodule update --init --recursive
 fi
 
-checkout_main() {
-    if [ "$install_only" = false ]; then
-        git checkout main
-    fi
-}
+cd src
+
+cd rpp_cli
+venv_pip install --no-deps -e .
+cd ..
+
+cd rpp_common
+venv_pip install --no-deps -e .
+cd ..
+
+cd rpp_orchestrator
+venv_pip install --no-deps -e .
+cd ..
+
+cd rpp_plugin_registrator
+venv_pip install --no-deps -e .
+cd ..
+
+cd rpp_py
+venv_pip install --no-deps -e .
+cd ..
+
+cd rpp_testing
+venv_pip install --no-deps -e .
+cd ..
 
 if ! bash "$(dirname "${BASH_SOURCE[0]}")/install_dependencies.sh"; then
     echo "RPP dependency installation failed." >&2
     exit 1
 fi
-
-cd src
-
-cd rpp_cli
-checkout_main
-venv_pip install --no-deps -e .
-cd ..
-
-cd rpp_common
-checkout_main
-venv_pip install --no-deps -e .
-cd ..
-
-cd rpp_orchestrator
-checkout_main
-venv_pip install --no-deps -e .
-cd ..
-
-cd rpp_plugin_registrator
-checkout_main
-venv_pip install --no-deps -e .
-cd ..
-
-cd rpp_py
-checkout_main
-venv_pip install --no-deps -e .
-cd ..
-
-cd rpp_testing
-checkout_main
-venv_pip install --no-deps -e .
-cd ..

@@ -5,10 +5,22 @@ Development metapackage for rpp.
 # Installation
 Run `setup.sh` script from the `rpp_dev` folder
 
-If you plan to use `cpp` components, make sure to build the rpp_cpp using the `colcon build` command
+The setup requires the explicitly pinned system packages `capnproto=1.1.0-2.1`
+and `libcapnp-dev=1.1.0-2.1`. Python runtime dependencies are declared in each
+package's `pyproject.toml`; test-only dependencies are exposed through its
+`[test]` extra and are installed by CI from that metadata.
+
+If you plan to use C++ components, build `rpp_cpp` with CMake. `colcon build`
+remains supported when using a ROS 2 workspace.
+
+```bash
+cmake -S src/rpp_cpp -B build/rpp_cpp
+cmake --build build/rpp_cpp
+```
 
 (NOTE): If using with ROS2, make sure you have sourced the environment in the terminal that runs GUI. In addition,
-configure the rpp to use ros2 compilation by running `rpp registry config USE_ROS2_COMPILATION=True`. This setting is global.
+configure RPP to use ROS 2 compilation by running
+`rpp registry config set USE_ROS2_COMPILATION true`. This setting is global.
 
 # Getting started
 
@@ -19,6 +31,14 @@ Usefull commands:
 `rpp ws` starts a Workspace GUI
 
 Further information on the rpp workflows can be found in the [documentation](rpp_docs/docs/workflows.md)
+
+## Continuous integration
+
+Each RPP repository runs its workflow on pushes to `develop` and on pull
+requests targeting `develop`. Component workflows assemble the full RPP
+integration checkout so they can test cross-package behavior. If the
+repositories are private, configure an `RPP_CI_TOKEN` repository secret with
+read access to all `coe-marble` RPP repositories.
 
 
 ## Using ROS2 with RPP
@@ -35,7 +55,7 @@ source install/setup.bash
 For ROS 2 compilation, also enable the global RPP setting:
 
 ```bash
-rpp registry config USE_ROS2_COMPILATION=True
+rpp registry config set USE_ROS2_COMPILATION true
 ```
 
 # Packages
