@@ -42,6 +42,11 @@ if [ "$install_only" = false ]; then
     git submodule update --init --recursive
 fi
 
+if ! bash "$(dirname "${BASH_SOURCE[0]}")/install_dependencies.sh"; then
+    echo "RPP dependency installation failed." >&2
+    exit 1
+fi
+
 cd src
 
 cd rpp_cli
@@ -68,7 +73,3 @@ cd rpp_testing
 venv_pip install --no-deps -e .
 cd ..
 
-if ! bash "$(dirname "${BASH_SOURCE[0]}")/install_dependencies.sh"; then
-    echo "RPP dependency installation failed." >&2
-    exit 1
-fi
