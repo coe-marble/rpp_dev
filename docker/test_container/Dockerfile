@@ -21,6 +21,7 @@ RUN apt-get update \
         git \
         libcapnp-dev=${CAPNP_PACKAGE_VERSION} \
         libspdlog-dev \
+        libxkbcommon0 \
         ninja-build \
         nlohmann-json3-dev \
         pybind11-dev \
