@@ -30,11 +30,12 @@ RUN apt-get update \
         python3-dev \
         python3-pip \
         python3-venv \
+        ros-lyrical-ament-index-python \
         ros-lyrical-rclcpp \
         rsync \
     && rm -rf /var/lib/apt/lists/*
 
-RUN python3 -m venv /opt/rpp-test-venv \
+RUN python3 -m venv --system-site-packages /opt/rpp-test-venv \
     && /opt/rpp-test-venv/bin/python -m pip install --no-cache-dir --upgrade pip \
     && /opt/rpp-test-venv/bin/python -m pip install --no-cache-dir \
         "PyQt6>=6.4,<7" \
