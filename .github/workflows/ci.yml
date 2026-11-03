@@ -42,4 +42,6 @@ jobs:
           done
           python -m pip install -e "src/rpp_cli[test]"
       - name: Run Python unit tests
-        run: python -m pytest src/rpp_cli/tests src/rpp_orchestrator/tests
+        run: |
+          source /opt/ros/lyrical/setup.bash
+          python -m pytest src/rpp_cli/tests src/rpp_orchestrator/tests
