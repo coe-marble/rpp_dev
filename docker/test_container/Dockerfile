@@ -18,6 +18,7 @@ RUN apt-get update \
         ca-certificates \
         capnproto=${CAPNP_PACKAGE_VERSION} \
         cmake \
+        gdb \
         git \
         libcapnp-dev=${CAPNP_PACKAGE_VERSION} \
         libspdlog-dev \
