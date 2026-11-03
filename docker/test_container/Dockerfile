@@ -37,6 +37,7 @@ RUN python3 -m venv /opt/rpp-test-venv \
     && /opt/rpp-test-venv/bin/python -m pip install --no-cache-dir --upgrade pip \
     && /opt/rpp-test-venv/bin/python -m pip install --no-cache-dir \
         "PyQt6>=6.4,<7" \
+        "pydantic>=2,<3" \
         "json5>=0.9,<1" \
         "pycapnp>=1.3,<3" \
         "pytest>=8,<9" \
