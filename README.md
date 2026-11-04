@@ -104,4 +104,12 @@ rpp registry config set USE_ROS2_COMPILATION true
 - [rpp_cpp](https://github.com/coe-marble/rpp_cpp.git) - C++ support for rpp
 - [rpp_py](https://github.com/coe-marble/rpp_py.git) - Python support for rpp
 
+## Feature plans
+
+- Managed plugin lifecycle and ROS node helpers:
+  [feature description](plans/managed-plugin-lifecycle/feature-description.md)
+  and [development plan](plans/managed-plugin-lifecycle/development-plan.md).
+  The native foundation's revisions and test results are recorded in the
+  [checkpoint validation](plans/managed-plugin-lifecycle/checkpoint-validation.md).
+
 
