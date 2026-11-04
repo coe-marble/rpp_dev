@@ -1,11 +1,42 @@
 # Managed plugin lifecycle: development plan
 
-Status: native foundation implemented and validated; manager phases remain planned.
+Status: native foundation validated; final feature checkpoint in progress.
 Date: 2026-11-04.
 Feature contract: [feature-description.md](feature-description.md).
 Checkpoint evidence: [checkpoint-validation.md](checkpoint-validation.md).
 
+## Plugin manager work-in-progress checkpoint
+
+This branch is a review/backup checkpoint, not a validated release or the final
+feature checkpoint. Earlier focused checks passed before the latest C++ manager
+refactor; tests and builds have not been run after that refactor, as requested.
+The foundation evidence linked above does not validate these pending changes.
+
+Known recovery issue: after a failed load leaves no context, Python cleanup can
+access a missing context and C++ cleanup can incorrectly report UNCONFIGURED.
+Resolve this before treating the native manager as stable. Adapted lifecycle
+RPC, source/artifact replacement, and the optional ROS bridge/spawner remain
+unfinished.
+
 ## Baseline and confirmed direction
+
+The final checkpoint keeps three public usage paths: the synchronous manager,
+manual low-level builder/context/hosting usage, and async component calls on an
+application-owned event loop. Async does not mean wrapping manager operations
+in `asyncio.to_thread`; the manager API remains synchronous. Python lifecycle
+types live in `rpp_py.lifecycle`, not `rpp_common`.
+
+Work continues on `feature/plugin-manager`, preserving the earlier foundation
+branches for their PRs. Native manager state, guarded access, generation checks,
+drain timeouts, switching, and fresh-context reload are implemented in Python
+and C++ and have focused tests. Component-level async generation supports both
+native Python `async def` implementations and RPC clients owned by the caller's
+loop. Concurrency unit tests use explicit state handshakes, no polling or
+five-second waits. Adapted lifecycle RPC, source/artifact replacement, optional
+ROS packages/spawner, and final coordinated integration validation remain.
+
+Independent working-tree edits to `rpp_cli/testing.py`, its setup tests, and the
+C++ CI workflow were already present during this work and are left intact.
 
 The following existing code should be extended and reused:
 
@@ -118,6 +149,11 @@ shutdown. An inactive plugin cannot be called through a managed handle.
 
 Owners: `rpp_common`, `rpp_py`, `rpp_cpp`, `rpp_plugin_registrator`.
 
+- Use `rpp_common/plugin_runtime.capnp` as the shared lifecycle control
+  interface for Python and C++ hosts. Route requests to the addressed hosted
+  component; execute callbacks in its process and return callback results and
+  schema-tagged handover state through this interface. Keep lifecycle control
+  out of individual plugin-type interfaces and generated domain adapters.
 - Define runtime control methods for addressed lifecycle operations, state
   transfer, and exact protocol-version validation. Old method ordinals and old
   wire layouts need not be retained; do not negotiate an older protocol.
