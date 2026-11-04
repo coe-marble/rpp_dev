@@ -1,4 +1,4 @@
-name: Integration Python tests
+name: Submodule CI
 
 on:
   push:
@@ -10,38 +10,24 @@ on:
 
 permissions:
   contents: read
-  packages: read
+  actions: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
-  python-tests:
-    runs-on: ubuntu-26.04
-    container:
-      image: ghcr.io/coe-marble/rpp-test-container:lyrical-ubuntu26.04-capnp1.1.0-v1
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ github.token }}
-    defaults:
-      run:
-        shell: bash
-    env:
-      QT_QPA_PLATFORM: offscreen
+  submodule-ci:
+    name: Submodule CI
+    environment: delayed-ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: recursive
-          token: ${{ secrets.RPP_CI_TOKEN || github.token }}
-      - name: Install test dependencies
-        run: |
-          python -m pip install --upgrade pip
-          for package in src/rpp_common src/rpp_plugin_registrator src/rpp_orchestrator src/rpp_py src/rpp_cli src/rpp_testing; do
-            python -m pip install --no-deps -e "$package"
-          done
-          python -m pip install -e "src/rpp_cli[test]"
-      - name: Run Python unit tests
-        run: |
-          source /opt/ros/lyrical/setup.bash
-          python -m pytest src/rpp_cli/tests src/rpp_orchestrator/tests
+          submodules: false
+          persist-credentials: false
+      - name: Check CI for pinned submodule commits
+        env:
+          GH_TOKEN: ${{ secrets.RPP_CI_TOKEN || github.token }}
+        run: python3 .github/scripts/submodule_ci.py
