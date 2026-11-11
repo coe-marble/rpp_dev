@@ -30,8 +30,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - uses: docker/build-push-action@v6
         with:
-          context: docker/test_container
-          file: docker/test_container/Dockerfile
+          context: docker/test_img
+          file: docker/test_img/Dockerfile
           push: true
           tags: |
             ghcr.io/coe-marble/rpp-test-container:lyrical-ubuntu26.04-capnp1.1.0-v1
