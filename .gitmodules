@@ -25,3 +25,6 @@
 [submodule "src/rpp_demos"]
 	path = src/rpp_demos
 	url = git@github.com:coe-marble/rpp_demos.git
+[submodule "src/rpp_ros2"]
+	path = src/rpp_ros2
+	url = git@github.com:coe-marble/rpp_ros2.git
