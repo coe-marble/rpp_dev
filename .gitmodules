@@ -1,30 +1,40 @@
 [submodule "src/rpp_py"]
 	path = src/rpp_py
 	url = git@github.com:coe-marble/rpp_py.git
+	branch = main
 [submodule "src/rpp_plugin_registrator"]
 	path = src/rpp_plugin_registrator
 	url = git@github.com:coe-marble/rpp_plugin_registrator.git
+	branch = main
 [submodule "src/rpp_orchestrator"]
 	path = src/rpp_orchestrator
 	url = git@github.com:coe-marble/rpp_orchestrator.git
+	branch = main
 [submodule "src/rpp_cpp"]
 	path = src/rpp_cpp
 	url = git@github.com:coe-marble/rpp_cpp.git
+	branch = lyrical
 [submodule "src/rpp_common"]
 	path = src/rpp_common
 	url = git@github.com:coe-marble/rpp_common.git
+	branch = main
 [submodule "src/rpp_cli"]
 	path = src/rpp_cli
 	url = git@github.com:coe-marble/rpp_cli.git
+	branch = main
 [submodule "src/rpp_testing"]
 	path = src/rpp_testing
 	url = git@github.com:coe-marble/rpp_testing.git
+	branch = main
 [submodule "rpp_docs"]
 	path = rpp_docs
 	url = https://github.com/coe-marble/rpp_docs.git
+	branch = main
 [submodule "src/rpp_demos"]
 	path = src/rpp_demos
 	url = git@github.com:coe-marble/rpp_demos.git
+	branch = main
 [submodule "src/rpp_ros2"]
 	path = src/rpp_ros2
 	url = git@github.com:coe-marble/rpp_ros2.git
+	branch = main
