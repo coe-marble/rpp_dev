@@ -80,7 +80,7 @@ RUN cd /workspaces/rpp/ros2_ws \
     && pip install --no-cache-dir -e /workspaces/rpp/ros2_ws/src/rpp_libraries/more_sensors \
     && pip install --no-cache-dir -e /workspaces/rpp/ros2_ws/src/rpp_libraries/more_dynamics \
     && pip install --no-cache-dir -e /workspaces/rpp/ros2_ws/src/rpp_libraries/more_simulation \
-    && colcon build --base-paths src/rpp_dev/src --packages-up-to rpp_cpp --symlink-install --cmake-args -DBUILD_TESTING=OFF \
+    && colcon build --base-paths src/rpp_dev/src --packages-up-to rpp_cpp rpp_ros2 --symlink-install --cmake-args -DBUILD_TESTING=OFF \
     && colcon build --packages-select marble_control_msgs --symlink-install --cmake-args -DBUILD_TESTING=OFF \
     && source /workspaces/rpp/ros2_ws/install/setup.bash \
     && rpp init-home \
