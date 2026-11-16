@@ -53,6 +53,9 @@ ENV PYTHONPATH="/opt/rpp-venv/lib/python3.14/site-packages:\
 /workspaces/rpp/ros2_ws/src/rpp_dev/src/rpp_py:\
 /workspaces/rpp/ros2_ws/src/rpp_libraries/more_common:${PYTHONPATH}"
 
+# setup.sh initializes all submodules, including src/rpp_demos/tutorials.
+# This development image is the recommended environment for running the tutorials:
+# it includes their sources, RPP runtime, and native registration dependencies.
 RUN --mount=type=ssh \
     install -d -m 0700 /root/.ssh \
     && ssh-keyscan github.com > /root/.ssh/known_hosts \
