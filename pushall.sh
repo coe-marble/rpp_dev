@@ -44,11 +44,24 @@ git commit -m "${1:-"Update"}"
 git push
 cd ..
 
+cd rpp_ros2
+git add .
+git commit -m "${1:-"Update"}"
+git push
+cd ..
+
+cd rpp_demos
+git add .
+git commit -m "${1:-"Update"}"
+git push
+cd ..
+
 cd ../rpp_docs
 git add .
 git commit -m "${1:-"Update"}"
 git push
 cd ..
+
 
 git add .
 git commit -m "${1:-"Update"}"

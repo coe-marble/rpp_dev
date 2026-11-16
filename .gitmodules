@@ -21,7 +21,7 @@
 	url = git@github.com:coe-marble/rpp_testing.git
 [submodule "rpp_docs"]
 	path = rpp_docs
-	url = https://github.com/coe-marble/rpp_docs.git
+	url = git@github.com:coe-marble/rpp_docs.git
 [submodule "src/rpp_demos"]
 	path = src/rpp_demos
 	url = git@github.com:coe-marble/rpp_demos.git
