@@ -5,7 +5,7 @@ ARG USERNAME=ubuntu
 ARG USER_UID=1000
 ARG USER_GID=${USER_UID}
 ARG RPP_DEV_REPOSITORY=git@github.com:coe-marble/rpp_dev.git
-ARG RPP_DEV_REF=main
+ARG RPP_DEV_REF=develop
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV ROS_DISTRO=lyrical
@@ -13,7 +13,7 @@ ENV RPP_USE_ROS2_COMPILATION=true
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-RUN apt-get update \
+RUN apt-get update --error-on=any \
     && apt-get install --no-install-recommends -y \
         bash-completion \
         build-essential \

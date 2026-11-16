@@ -15,11 +15,14 @@ fi
 
 repository_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
+editable_projects=()
 for project_dir in "${repository_dir}"/src/*; do
     [ -f "${project_dir}/pyproject.toml" ] || continue
-    # The RPP packages are installed as editable packages by setup.sh with
-    # --no-deps. Reinstalling them as editable packages here lets pip resolve
-    # their declared dependencies without requiring a version-specific pip
-    # option such as --only-deps.
-    "$venv_python" -m pip install --no-cache-dir -e "$project_dir"
+    editable_projects+=(-e "$project_dir")
 done
+
+# Resolve all local RPP packages together, including their circular dependencies,
+# so pip does not try to download sibling packages from the package index.
+if [ "${#editable_projects[@]}" -gt 0 ]; then
+    "$venv_python" -m pip install --no-cache-dir "${editable_projects[@]}"
+fi
