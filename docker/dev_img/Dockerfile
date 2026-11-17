@@ -27,6 +27,7 @@ RUN apt-get update --error-on=any \
         less \
         libcapnp-dev=1.1.0-2.1 \
         libspdlog-dev \
+        libxcb-cursor0 \
         nlohmann-json3-dev \
         openssh-client \
         pybind11-dev \

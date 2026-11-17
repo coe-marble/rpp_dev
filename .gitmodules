@@ -28,3 +28,6 @@
 [submodule "src/rpp_ros2"]
 	path = src/rpp_ros2
 	url = git@github.com:coe-marble/rpp_ros2.git
+[submodule "src/rpp_navigation"]
+	path = src/rpp_navigation
+	url = git@github.com:coe-marble/rpp_navigation.git

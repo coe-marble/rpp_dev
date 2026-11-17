@@ -1,6 +1,6 @@
 # rpp_dev
 
-Integration checkout and pinned submodules for the Robotics Plugin Platform.
+Integration checkout and pinned submodules for the Robotics [Plugin][glossary-plugin] Platform.
 
 Documentation is maintained in `rpp_docs`:
 
@@ -12,3 +12,5 @@ Documentation is maintained in `rpp_docs`:
 - [Repository catalog](rpp_docs/docs/repositories.md).
 
 [Read the guide on GitHub](https://github.com/coe-marble/rpp_docs/blob/develop/docs/getting-started.md).
+
+[glossary-plugin]: https://github.com/coe-marble/rpp_docs/blob/develop/docs/glossary.md#plugin "Plugin: a concrete implementation of a Plugin Type."
