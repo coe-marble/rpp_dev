@@ -50,25 +50,46 @@ def pinned_submodules(root):
 
     config = configparser.ConfigParser(interpolation=None)
     config.read_string(git("show", "HEAD:.gitmodules"))
+    # Compare both committed sources so an unlisted gitlink cannot pass silently.
+    gitlinks = {}
+    for entry in git("ls-tree", "-r", "-z", "HEAD").split("\0"):
+        if entry:
+            metadata, path = entry.split("\t", 1)
+            mode, _, sha = metadata.split()
+            if mode == "160000":
+                gitlinks[path] = sha
+
     modules = []
     for section in config.sections():
         path = config[section]["path"]
-        # Read the gitlink in HEAD, never the submodule worktree or branch tip.
-        entries = git("ls-tree", "-z", "HEAD", "--", path).split("\0")
-        matches = [entry.split("\t", 1)[0].split() for entry in entries
-                   if entry and entry.split("\t", 1)[1] == path]
-        if len(matches) != 1 or matches[0][:2] != ["160000", "commit"]:
-            raise ValueError(f"Submodule {path} has no committed gitlink")
-        modules.append(Submodule(path, repository_from_url(config[section]["url"]),
-                                 matches[0][2]))
+        sha = gitlinks.pop(path, None)
+        if sha is None:
+            raise ValueError(f"Submodule {path} has no committed gitlink or is listed twice")
+        modules.append(Submodule(path, repository_from_url(config[section]["url"]), sha))
+    if gitlinks:
+        raise ValueError(f"Committed gitlinks missing from .gitmodules: {', '.join(sorted(gitlinks))}")
     if not modules:
         raise ValueError("No pinned submodules found; refusing to report success")
     return modules
 
 
+class MissingWorkflowError(Exception):
+    pass
+
+
 class GitHub:
     def __init__(self, token):
         self.token = token
+
+    def _get(self, url):
+        request = Request(url, headers={
+            "Authorization": f"Bearer {self.token}",
+            "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+            "User-Agent": "rpp-submodule-ci",
+        })
+        with urlopen(request, timeout=20) as response:
+            return json.load(response)
 
     def workflow_runs(self, module, workflow):
         runs = []
@@ -77,14 +98,14 @@ class GitHub:
             query = urlencode({"head_sha": module.sha, "per_page": 100, "page": page})
             url = (f"https://api.github.com/repos/{module.repository}/actions/workflows/"
                    f"{quote(workflow, safe='')}/runs?{query}")
-            request = Request(url, headers={
-                "Authorization": f"Bearer {self.token}",
-                "Accept": "application/vnd.github+json",
-                "X-GitHub-Api-Version": "2022-11-28",
-                "User-Agent": "rpp-submodule-ci",
-            })
-            with urlopen(request, timeout=20) as response:
-                payload = json.load(response)
+            try:
+                payload = self._get(url)
+            except HTTPError as error:
+                if error.code != 404:
+                    raise
+                # GitHub also uses 404 when the token cannot read the repository.
+                self._get(f"https://api.github.com/repos/{module.repository}/actions/workflows?per_page=1")
+                raise MissingWorkflowError(workflow) from error
             batch = payload["workflow_runs"]
             runs.extend(batch)
             if not batch or len(runs) >= payload["total_count"]:
@@ -96,6 +117,9 @@ def inspect_module(module, workflow, fetch):
     workflow_url = f"https://github.com/{module.repository}/actions/workflows/{workflow}"
     try:
         runs = [run for run in fetch(module, workflow) if run.get("head_sha") == module.sha]
+    except MissingWorkflowError:
+        return Result(module, "error", f"GitHub Actions has no workflow at {workflow}",
+                      f"https://github.com/{module.repository}/actions")
     except HTTPError as error:
         return Result(module, "error", (
             f"GitHub HTTP {error.code}: check RPP_CI_TOKEN access and workflow {workflow}"

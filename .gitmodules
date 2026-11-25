@@ -31,3 +31,6 @@
 [submodule "src/rpp_navigation"]
 	path = src/rpp_navigation
 	url = git@github.com:coe-marble/rpp_navigation.git
+[submodule "src/rpp_interfaces"]
+	path = src/rpp_interfaces
+	url = git@github.com:coe-marble/rpp_interfaces.git
